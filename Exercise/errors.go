@@ -17,6 +17,7 @@ func Sqrt(x float64) (float64, error) {
 	if x < 0 {
 		return -1, ErrNegativeSqrt(x)
 	}
+	// 最大10回繰り返すが、途中で差が0.0000001以下になれば終了
 	for i := 0; i < 10; i++ {
 		old_z = z
 		z -= (z*z - x) / (2 * z)
