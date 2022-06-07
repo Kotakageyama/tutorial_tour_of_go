@@ -11,16 +11,17 @@ type rot13Reader struct {
 }
 
 func (rt rot13Reader) Read(b []byte) (int, error) {
-	def := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
-	toChange := []byte("NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm")
+	defaultAlphabet := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+	ChangedAlphabet := []byte("NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm")
 	n, err := rt.r.Read(b)
 	if err != nil {
 		return n, err
 	}
+	// 一つ一つ文字を取り出して該当するものに置き換える
 	for k, v := range b {
-		for key, value := range def {
+		for key, value := range defaultAlphabet {
 			if v == value {
-				b[k] = toChange[key]
+				b[k] = ChangedAlphabet[key]
 			}
 		}
 	}
