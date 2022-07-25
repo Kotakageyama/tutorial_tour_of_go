@@ -29,14 +29,14 @@ func (u *urlList) add(url string, fetcher Fetcher) ([]string, error) {
 	if u.isDone(url) {
 		return nil, nil
 	}
-	body, urls, err := fetcher.Fetch(url)
+	urlBody, urls, err := fetcher.Fetch(url)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("found: %s %q\n", url, body)
+	fmt.Printf("found: %s %q\n", url, urlBody)
 	u.mu.Lock()
 	defer u.mu.Unlock()
-	u.site[url] = body
+	u.site[url] = urlBody
 	return urls, err
 }
 
